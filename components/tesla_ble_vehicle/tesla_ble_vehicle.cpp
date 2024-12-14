@@ -1224,6 +1224,15 @@ namespace esphome
       std::string action_str;
       switch (action)
       {
+      case SET_SENTRY_SWITCH:
+        action_str = "setSentrySwitch";
+        break;
+      case SET_HVAC_SWITCH:
+        action_str = "setHVACSwitch";
+        break;
+      case SET_HVAC_STEERING_HEATER_SWITCH:
+        action_str = "setHVACSteeringHeatSwitch";
+        break;
       case SET_CHARGING_SWITCH:
         action_str = "setChargingSwitch";
         break;
@@ -1247,6 +1256,18 @@ namespace esphome
         ESP_LOGI(TAG, "[%s] Building message..", action_str.c_str());
         switch (action)
         {
+        case SET_SENTRY_SWITCH:
+          return_code = tesla_ble_client_->buildSentrySwitchMessage(
+              static_cast<bool>(param), message_buffer, &message_length);
+          break;
+        case SET_HVAC_SWITCH:
+          return_code = tesla_ble_client_->buildHVACMessage(
+              static_cast<bool>(param), message_buffer, &message_length);
+          break;
+        case SET_HVAC_STEERING_HEATER_SWITCH:
+          return_code = tesla_ble_client_->buildHVACSteeringHeaterMessage(
+              static_cast<bool>(param), message_buffer, &message_length);
+          break;
         case SET_CHARGING_SWITCH:
           return_code = tesla_ble_client_->buildChargingSwitchMessage(
               static_cast<bool>(param), message_buffer, &message_length);
